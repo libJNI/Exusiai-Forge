@@ -1,0 +1,16 @@
+[
+{
+  "modid": "BetterFPS",
+  "name": "BetterFPS",
+  "description": "BetterFPS",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["BetterFPS"],
+  "credits": "BetterFPS",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
