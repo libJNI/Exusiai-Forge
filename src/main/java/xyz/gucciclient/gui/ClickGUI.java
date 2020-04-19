@@ -2,13 +2,15 @@ package xyz.gucciclient.gui;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+
 import net.minecraft.client.gui.GuiScreen;
 import xyz.gucciclient.gui.component.Component;
 import xyz.gucciclient.gui.component.Frame;
 import xyz.gucciclient.modules.Module;
 
 public class ClickGUI extends GuiScreen {
-   public ArrayList frames = new ArrayList();
+   public List<Frame> frames = new ArrayList<>();
 
    public ClickGUI() {
       int frameX = 5;
@@ -27,16 +29,13 @@ public class ClickGUI extends GuiScreen {
 
    public void func_73863_a(int mouseX, int mouseY, float partialTicks) {
       //this.drawDefaultBackground();
-      Iterator var4 = this.frames.iterator();
 
-      while(var4.hasNext()) {
-         Frame frame = (Frame)var4.next();
+      for (Frame frame : this.frames) {
          frame.renderFrame(this.fontRendererObj);
          frame.updatePosition(mouseX, mouseY);
-         Iterator var6 = frame.getComponents().iterator();
 
-         while(var6.hasNext()) {
-            Component comp = (Component)var6.next();
+         for (Object o : frame.getComponents()) {
+            Component comp = (Component) o;
             comp.updateComponent(mouseX, mouseY);
          }
       }

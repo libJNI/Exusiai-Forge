@@ -3,6 +3,8 @@ package xyz.gucciclient.gui.component;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import org.lwjgl.opengl.GL11;
@@ -11,7 +13,7 @@ import xyz.gucciclient.modules.Module;
 import xyz.gucciclient.utils.Wrapper;
 
 public class Frame {
-   public ArrayList components = new ArrayList();
+   public List<Component> components = new ArrayList<>();
    public Module.Category category;
    public boolean open;
    private int width;
@@ -45,7 +47,7 @@ public class Frame {
 
    }
 
-   public ArrayList getComponents() {
+   public List<Component> getComponents() {
       return this.components;
    }
 

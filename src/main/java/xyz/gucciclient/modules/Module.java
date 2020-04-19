@@ -2,6 +2,8 @@ package xyz.gucciclient.modules;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -15,8 +17,8 @@ public abstract class Module {
    private int key;
    private boolean state;
    private Module.Category category;
-   private ArrayList booleans = new ArrayList();
-   private ArrayList values = new ArrayList();
+   private List<BooleanValue> booleans = new ArrayList<>();
+   private List<NumberValue> values = new ArrayList<>();
 
    public Module(String name, int key, Module.Category category) {
       this.name = name;
@@ -53,11 +55,11 @@ public abstract class Module {
       return this.category;
    }
 
-   public ArrayList getBooleans() {
+   public List<BooleanValue> getBooleans() {
       return this.booleans;
    }
 
-   public ArrayList getValues() {
+   public List<NumberValue> getValues() {
       return this.values;
    }
 
