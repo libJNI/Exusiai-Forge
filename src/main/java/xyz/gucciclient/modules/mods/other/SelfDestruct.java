@@ -14,7 +14,7 @@ public class SelfDestruct extends Module {
    }
    
    public void onEnable() {
-	   Client.INSTANCE.zibi();
-	   System.gc();
+	   //Client.INSTANCE.zibi();
+	   //System.gc();
    }
 }
