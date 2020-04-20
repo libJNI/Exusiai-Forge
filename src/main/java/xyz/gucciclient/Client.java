@@ -33,7 +33,7 @@ public class Client {
 
 	public void zibi() {
 		MinecraftForge.EVENT_BUS.unregister(this);
-		FMLCommonHandler.instance().bus().unregister(this);
+		//FMLCommonHandler.instance().bus().unregister(this);
 	}
 
 	@SubscribeEvent

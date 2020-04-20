@@ -117,15 +117,15 @@ public class Killaura extends Module {
    public void AddValidTargetsToArrayList() {
       for(int entities = 0; entities < Wrapper.getMinecraft().theWorld.loadedEntityList.size(); ++entities) {
          Entity entity = (Entity)Wrapper.getMinecraft().theWorld.getLoadedEntityList().get(entities);
-         if(!this.entities.contains(entity)) {
              if (this.isValid(entity)) {
-                 this.entities.add(entity);
+                 if(!this.entities.contains(entity)) {
+                     this.entities.add(entity);
+                 }
               } else {
                  this.entities.remove(entity);
               }
              sortList(this.entities);
          }
-      }
 
    }
 
@@ -184,7 +184,7 @@ public class Killaura extends Module {
       }
 
       if (this.entities.contains(entity)) {
-    	 this.getRotations(entity);
+    	 this.getAngles((EntityLivingBase) entity);
          Wrapper.getPlayer().swingItem();
          Wrapper.getPlayerController().attackEntity(Wrapper.getPlayer(), entity);
          mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer,C0BPacketEntityAction.Action.START_SPRINTING));

@@ -41,15 +41,14 @@ public class Eagle extends Module {
    public void onDisable() {
 	   KeyBinding.setKeyBindState(mc.gameSettings.keyBindSneak.getKeyCode(), false);
 	   super.onDisable();
-
    }
    
    public Block getBlock(BlockPos pos) {
 	      return mc.theWorld.getBlockState(pos).getBlock();
    }
 
-   public Block BlockUnder(EntityPlayer player) {
-	      return this.getBlock(new BlockPos(player.posX, player.posY - 1.0D, player.posZ));
+   public Block BlockUnder(EntityPlayer playerIn) {
+	      return this.getBlock(new BlockPos(playerIn.posX, playerIn.posY - 1.0D, playerIn.posZ));
    }
 
 }
