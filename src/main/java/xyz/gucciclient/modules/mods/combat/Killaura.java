@@ -13,6 +13,7 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityBat;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C0BPacketEntityAction;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -184,7 +185,8 @@ public class Killaura extends Module {
       }
 
       if (this.entities.contains(entity)) {
-    	 this.getAngles((EntityLivingBase) entity);
+          float[] fakerot = this.getAngles((EntityLivingBase) entity);
+    	 //Wrapper.getMinecraft().getNetHandler().addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(fakerot[0],fakerot[1],Wrapper.getPlayer().onGround));
          Wrapper.getPlayer().swingItem();
          Wrapper.getPlayerController().attackEntity(Wrapper.getPlayer(), entity);
          mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer,C0BPacketEntityAction.Action.START_SPRINTING));

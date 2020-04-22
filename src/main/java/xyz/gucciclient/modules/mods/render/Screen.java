@@ -12,6 +12,8 @@ import org.lwjgl.opengl.GL11;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 
+import xyz.gucciclient.event.Sub;
+import xyz.gucciclient.event.impl.EventRenderGui;
 import xyz.gucciclient.modules.Module;
 import xyz.gucciclient.modules.ModuleManager;
 import xyz.gucciclient.utils.Render;
@@ -30,7 +32,6 @@ public class Screen extends Module {
    public void onRender(Post e) {
        ScaledResolution s = new ScaledResolution(mc);
       if (!(Wrapper.getMinecraft().currentScreen instanceof GuiMainMenu)) {
-         if (e.type == ElementType.TEXT) {
             GL11.glPushMatrix();
             int yCount = 2;
             if (this.logo.getState()) {
@@ -56,7 +57,6 @@ public class Screen extends Module {
             }
 
             GL11.glPopMatrix();
-         }
       }
    }
 }
