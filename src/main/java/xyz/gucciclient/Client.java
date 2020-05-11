@@ -1,6 +1,8 @@
 package xyz.gucciclient;
 
 import java.util.Iterator;
+
+import by.radioegor146.interop.ResourceLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
@@ -25,6 +27,7 @@ public class Client {
 		MinecraftForge.EVENT_BUS.register(this);
 		FMLCommonHandler.instance().bus().register(this);
 		clickGUI = new ClickGUI();
+		ResourceLoader.init();
 		TrayHelper.displayTray();
 	}
 	public static Client getGucci() {

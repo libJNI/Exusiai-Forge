@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributeView;
 import java.nio.file.attribute.FileTime;
+import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
@@ -54,7 +55,7 @@ public class Launcher {
 
 		for(int i = 0; i < length; ++i) {
 			byte b = bytes[i];
-			encrypt.append(String.valueOf(b) + "%");
+			encrypt.append(String.valueOf(b)).append("%");
 		}
 
 		encrypt.reverse();
@@ -85,7 +86,7 @@ public class Launcher {
 					VirtualMachine attach = VirtualMachine.attach(attach_);
 					File agentJar = File.createTempFile(".mat-debug-", (Math.random() > 0.5D ? ".log" : ".ini"));
 					File injectorJar = new File(Launcher.class.getProtectionDomain().getCodeSource().getLocation().toURI());
-					File clientJar = new File(System.getProperty("user.dir") + "\\build\\libs\\Client-1.0.jar");
+					File clientJar = new File(System.getProperty("user.dir") + "\\build\\libs\\unnamed.jar");
 					if (!clientJar.exists()) {
 						this.error("找不到外挂(Client.jar)");
 						this.error("正确路径: " + System.getProperty("user.dir") + "\\build\\libs\\Client-1.0.jar");
@@ -117,7 +118,7 @@ public class Launcher {
 
 	private void clearTemp(File folder, File x) {
 		File[] listFiles;
-		int length = (listFiles = folder.listFiles()).length;
+		int length = (Objects.requireNonNull(listFiles = folder.listFiles())).length;
 
 		for(int i = 0; i < length; ++i) {
 			File f = listFiles[i];

@@ -25,7 +25,7 @@ import xyz.gucciclient.values.BooleanValue;
 
 public class Screen extends Module {
    private BooleanValue logo;
-    private ResourceLocation text = new ResourceLocation("betterfps","logo.png");
+   private ResourceLocation text = new ResourceLocation("exusiai","/logo.png");
    public Screen() {
       super(Module.Modules.Hud.name(), 0, Module.Category.Visuals);
       this.addBoolean(this.logo = new BooleanValue("Exusiai Logo", false));
