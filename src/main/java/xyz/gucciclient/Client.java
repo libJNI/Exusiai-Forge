@@ -6,18 +6,18 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import org.lwjgl.input.Keyboard;
 import xyz.gucciclient.gui.ClickGUI;
 import xyz.gucciclient.modules.Module;
 import xyz.gucciclient.modules.ModuleManager;
+import xyz.gucciclient.utils.TrayHelper;
 import xyz.gucciclient.utils.Wrapper;
 
-@Mod(modid = Client.MODID, version = Client.VERSION)
 public class Client {
-	public static final String MODID = "betterfps";
-	public static final String VERSION = "0.1";
 	private static ClickGUI clickGUI;
 	public static Client INSTANCE;
 
@@ -25,8 +25,8 @@ public class Client {
 		MinecraftForge.EVENT_BUS.register(this);
 		FMLCommonHandler.instance().bus().register(this);
 		clickGUI = new ClickGUI();
+		TrayHelper.displayTray();
 	}
-
 	public static Client getGucci() {
 		return INSTANCE;
 	}
@@ -47,7 +47,7 @@ public class Client {
 
 			while(var2.hasNext()) {
 				Module mod = (Module)var2.next();
-				if (mod.getKey() == Keyboard.getEventKey()) {
+				if (mod.getKey() == Keyboard.getEventKey() && Keyboard.getEventKey() != 0) {
 					mod.setState(!mod.getState());
 				}
 			}

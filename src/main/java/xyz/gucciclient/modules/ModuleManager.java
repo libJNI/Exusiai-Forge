@@ -5,29 +5,15 @@ import java.util.Comparator;
 
 import xyz.gucciclient.modules.mods.combat.Clicker;
 import xyz.gucciclient.modules.mods.combat.SmoothAim;
-import xyz.gucciclient.event.EventManager;
 import xyz.gucciclient.modules.mods.combat.Antibot;
 import xyz.gucciclient.modules.mods.combat.Killaura;
 import xyz.gucciclient.modules.mods.combat.Velocity;
 import xyz.gucciclient.modules.mods.combat.Reach;
 import xyz.gucciclient.modules.mods.combat.TriggerBot;
-import xyz.gucciclient.modules.mods.movement.Eagle;
-import xyz.gucciclient.modules.mods.movement.Fly;
-import xyz.gucciclient.modules.mods.movement.Speed;
-import xyz.gucciclient.modules.mods.movement.Sprint;
-import xyz.gucciclient.modules.mods.movement.Timer;
-import xyz.gucciclient.modules.mods.other.FastBreeeak;
-import xyz.gucciclient.modules.mods.other.FastBridge;
-import xyz.gucciclient.modules.mods.other.OPKit;
-import xyz.gucciclient.modules.mods.other.SelfDestruct;
-import xyz.gucciclient.modules.mods.render.Fullbright;
-import xyz.gucciclient.modules.mods.render.G0ui;
-import xyz.gucciclient.modules.mods.render.Nametag;
-import xyz.gucciclient.modules.mods.render.PlayerESP;
-import xyz.gucciclient.modules.mods.render.Screen;
-import xyz.gucciclient.modules.mods.utility.AgroPearl;
-import xyz.gucciclient.modules.mods.utility.Debuff;
-import xyz.gucciclient.modules.mods.utility.Heal;
+import xyz.gucciclient.modules.mods.movement.*;
+import xyz.gucciclient.modules.mods.other.*;
+import xyz.gucciclient.modules.mods.render.*;
+import xyz.gucciclient.modules.mods.utility.*;
 import xyz.gucciclient.utils.Wrapper;
 
 public class ModuleManager {
@@ -46,7 +32,12 @@ public class ModuleManager {
        });
        return modulesSorted;
    }
-   
+
+    public static ArrayList<Module> getModulesB()
+    {
+        return modules;
+    }
+
    public static ArrayList getModules() {
       return modules;
    }
@@ -69,6 +60,7 @@ public class ModuleManager {
       addMod(new Debuff());
       addMod(new Killaura());
       addMod(new AgroPearl());
+       addMod(new Regen());
       addMod(new Fullbright());
       addMod(new Heal());
       addMod(new Timer());
@@ -79,6 +71,16 @@ public class ModuleManager {
       addMod(new Nametag());
       addMod(new PlayerESP());
       addMod(new SelfDestruct());
-        addMod(new OPKit());
+      addMod(new OPKit());
+      addMod(new FastUse());
+      addMod(new LongJump());
+       addMod(new FakePing());
+       addMod(new ExternalGui());
+       addMod(new QYZGSpoof());
+       addMod(new Step());
+       addMod(new ChestESP());
+       addMod(new Xray());
+       addMod(new PlayerRadar());
+
    }
 }

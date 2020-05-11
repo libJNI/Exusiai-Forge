@@ -73,7 +73,7 @@ public class Frame {
 
    public void renderFrame(FontRenderer fontRenderer) {
       this.width = 80;
-      Gui.drawRect(this.x - 1, this.y - 3, this.x + this.width + 1, this.y + this.barHeight - 2, (new Color(255, 0, 0, 150)).getRGB());
+      Gui.drawRect(this.x - 1, this.y - 3, this.x + this.width + 1, this.y + this.barHeight - 2, (new Color(	255,20,147, 255)).getRGB());
       GL11.glPushMatrix();
       Wrapper.getMinecraft().fontRendererObj.drawString(this.category.name(), this.x + 2, this.y, -1);
       if (this.open) {

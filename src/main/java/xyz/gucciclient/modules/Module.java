@@ -7,7 +7,6 @@ import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import xyz.gucciclient.event.EventManager;
 import xyz.gucciclient.utils.Wrapper;
 import xyz.gucciclient.values.BooleanValue;
 import xyz.gucciclient.values.NumberValue;

@@ -1,5 +1,10 @@
 package xyz.gucciclient.modules.mods.render;
 
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityArmorStand;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
@@ -11,6 +16,8 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import xyz.gucciclient.Client;
 import xyz.gucciclient.modules.Module;
+import xyz.gucciclient.utils.ReflectionHelper;
+import xyz.gucciclient.utils.RenderUtils;
 import xyz.gucciclient.utils.Wrapper;
 
 public class PlayerESP extends Module {
@@ -23,42 +30,30 @@ public class PlayerESP extends Module {
    
    @SubscribeEvent
 	public void RenderWorld(RenderWorldLastEvent e) {
-	for (EntityPlayer entityPlayer : Minecraft.getMinecraft().theWorld.playerEntities) {
-			if(entityPlayer == Minecraft.getMinecraft().thePlayer) {
-				
-				renderPlayer(null);
-			} else {
-				
-				renderPlayer(entityPlayer.getPosition());
-			}
-		}
-   }
-   
-   public static void renderPlayer(BlockPos playerPos)
-   {
- 	 for(EntityPlayer entityplayer : Minecraft.getMinecraft().theWorld.playerEntities) {
- 		 if(entityplayer != Minecraft.getMinecraft().thePlayer) {
- 	 playerPos = entityplayer.getPosition();
- 	 
- 	 double x = Math.floor(entityplayer.posX) - Wrapper.getMinecraft().getRenderManager().viewerPosX;
- 	 double y = Math.floor(entityplayer.posY)- Wrapper.getMinecraft().getRenderManager().viewerPosY;
- 	 double z = Math.floor(entityplayer.posZ)- Wrapper.getMinecraft().getRenderManager().viewerPosZ;
-     
-     GL11.glPushMatrix();
-     GL11.glEnable(3042);
-     GL11.glBlendFunc(770, 771);
-     GL11.glLineWidth(3.0F);
-     GL11.glDisable(3553);
-     GL11.glDisable(2929);
-     GL11.glDepthMask(true);
-     RenderGlobal.drawOutlinedBoundingBox(new AxisAlignedBB(x, y, z, x + 1.0D, y + 2.0D, z + 1.0D), chestColorRed, chestColorGreen, chestColorBlue, 255);
-     GL11.glEnable(3553);
-     GL11.glEnable(2929);
-     GL11.glDepthMask(true);
-     GL11.glDisable(3042);
-     GL11.glPopMatrix();
- 	 }
-   }
- 	 
- }
+       for (Object object : Wrapper.getWorld().loadedEntityList) {
+           if(object instanceof EntityLivingBase && !(object instanceof EntityArmorStand)) {
+               EntityLivingBase entity = (EntityLivingBase)object;
+               this.render(entity, e.partialTicks);
+           }
+       }
+    }
+
+    void render(EntityLivingBase entity, float ticks) {
+        if(entity == Wrapper.getPlayer()) {
+            return;
+        }
+        if(entity instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer)entity;
+        }
+        if(entity.isInvisible()) {
+            RenderUtils.drawESP(entity, 0.0f, 0.0f, 0.0f, 1.0f, ticks);
+            return;
+        }
+        if(entity.hurtTime > 0) {
+            RenderUtils.drawESP(entity, 1.0f, 0.0f, 0.0f, 1.0f, ticks);
+            return;
+        }
+        RenderUtils.drawESP(entity, 1.0f, 1.0f, 1.0f, 1.0f, ticks);
+    }
+
 }

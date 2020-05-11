@@ -19,15 +19,14 @@ public class Sprint extends Module {
 
    @SubscribeEvent
    public void onTick(PlayerTickEvent ev3nt) throws Exception {
-       if (canSprint()) {
-           mc.thePlayer.setSprinting(true);
+       if (this.omni.getState()) {
+           if (MovementUtils.isMoving() && mc.thePlayer.getFoodStats().getFoodLevel() > 6) {
+               mc.thePlayer.setSprinting(true);
+           }
+       } else {
+           if(mc.gameSettings.keyBindForward.isPressed()) {
+               mc.thePlayer.setSprinting(true);
+           }
        }
-   }
-
-   private boolean canSprint() {
-   	if(!(this.omni.getState() &&!mc.gameSettings.keyBindForward.isPressed())) {
-   		return false;
-   	}
-       return MovementUtils.isMoving() && mc.thePlayer.getFoodStats().getFoodLevel() > 6;
    }
 }

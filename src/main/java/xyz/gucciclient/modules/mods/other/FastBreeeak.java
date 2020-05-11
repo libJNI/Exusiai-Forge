@@ -6,6 +6,8 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import xyz.gucciclient.modules.Module;
+import xyz.gucciclient.utils.ReflectionHelper;
+import xyz.gucciclient.utils.Wrapper;
 
 public class FastBreeeak extends Module {
    public FastBreeeak() {
@@ -13,14 +15,12 @@ public class FastBreeeak extends Module {
    }
 
    @SubscribeEvent
-   public void onTick(ClientTickEvent event) throws Exception, Throwable {
+   public void onTick(ClientTickEvent event) {
       try {
-         Field f = PlayerControllerMP.class.getDeclaredField("field_78781_i");
-         if (f == null || !f.getName().equalsIgnoreCase("field_78781_i")) {
-            return;
-         }
-
-         f.setAccessible(true);
+      Field field = ReflectionHelper.getField(PlayerControllerMP.class, "blockHitDelay", "field_78781_i", "E");
+      if(field != null) {
+         field.set(Wrapper.getPlayerController(), 0);
+      }
       } catch (Exception var3) {
          var3.printStackTrace();
       }
@@ -31,4 +31,5 @@ public class FastBreeeak extends Module {
    public void onDisable() {
       this.mc.thePlayer.removePotionEffect(3);
    }
+
 }

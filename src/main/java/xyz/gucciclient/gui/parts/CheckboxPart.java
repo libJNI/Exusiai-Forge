@@ -4,7 +4,7 @@ import java.awt.Color;
 import net.minecraft.client.gui.Gui;
 import org.lwjgl.opengl.GL11;
 import xyz.gucciclient.gui.component.Component;
-import xyz.gucciclient.utils.Render;
+import xyz.gucciclient.utils.RenderUtils;
 import xyz.gucciclient.utils.Wrapper;
 import xyz.gucciclient.values.BooleanValue;
 
@@ -28,7 +28,7 @@ public class CheckboxPart extends Component {
       Gui.drawRect(this.parent.parent.getX() + 1, this.parent.parent.getY() + 12 + this.offset, this.parent.parent.getX() - 2 + this.parent.parent.getWidth() * 1, this.parent.parent.getY() + this.offset, (new Color(20, 20, 20, 150)).getRGB());
       Gui.drawRect(this.parent.parent.getX() + 3, this.parent.parent.getY() + this.offset + 9, this.parent.parent.getX() - 5 + this.parent.parent.getWidth() - 63, this.parent.parent.getY() + this.offset + 1, (new Color(0, 0, 0, 150)).getRGB());
       if (this.op.getState()) {
-         Render.drawCheckmark((float)(this.parent.parent.getX() + 4), (float)(this.parent.parent.getY() + this.offset + 4), (new Color(255, 20, 20)).getRGB());
+         RenderUtils.drawCheckmark((float)(this.parent.parent.getX() + 4), (float)(this.parent.parent.getY() + this.offset + 4), (new Color(255, 20, 20)).getRGB());
       }
 
       GL11.glPushMatrix();

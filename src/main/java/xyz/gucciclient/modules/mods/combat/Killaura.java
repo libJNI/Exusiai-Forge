@@ -16,19 +16,24 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C0BPacketEntityAction;
 import net.minecraft.util.MathHelper;
+import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import xyz.gucciclient.modules.Module;
+import xyz.gucciclient.modules.mods.other.QYZGSpoof;
 import xyz.gucciclient.utils.Timer;
 import xyz.gucciclient.utils.Wrapper;
 import xyz.gucciclient.values.BooleanValue;
 import xyz.gucciclient.values.NumberValue;
 
 public class Killaura extends Module {
-   private BooleanValue teams = new BooleanValue("Teams", true);
+    public static BooleanValue teams = new BooleanValue("Teams", true);
    private BooleanValue player = new BooleanValue("Players", true);
    private BooleanValue mob = new BooleanValue("Mobs", false);
    private BooleanValue animal = new BooleanValue("Animals", false);
+    private BooleanValue Lockview = new BooleanValue("Lockview", false);
    private BooleanValue Switch = new BooleanValue("Switch", false);
    private BooleanValue invis = new BooleanValue("Invis", true);
    private NumberValue reach = new NumberValue("Reach", 4.25D, 3.0D, 8.0D);
@@ -52,6 +57,7 @@ public class Killaura extends Module {
       this.addBoolean(this.mob);
       this.addBoolean(this.animal);
       this.addBoolean(this.Switch);
+      this.addBoolean(this.Lockview);
    }
 
    public void onEnable() {
@@ -60,12 +66,14 @@ public class Killaura extends Module {
 
    @SubscribeEvent
    public void onTick(TickEvent event) {
-      if (Wrapper.getPlayer() != null) {
-         if (Wrapper.getWorld() != null) {
-            this.AddValidTargetsToArrayList();
-            this.Attack();
-         }
-      }
+        if(this.getState()){
+            if (Wrapper.getPlayer() != null) {
+                if (Wrapper.getWorld() != null) {
+                    this.AddValidTargetsToArrayList();
+                    this.Attack();
+                }
+            }
+        }
    }
 
    private long getDelay() {
@@ -108,11 +116,11 @@ public class Killaura extends Module {
    }
 
    public boolean isValid(Entity entity) {
-      return entity != null && entity.isEntityAlive() && entity != this.mc.thePlayer && (entity instanceof EntityPlayer && this.player.getState() || entity instanceof EntityAnimal && this.animal.getState() || entity instanceof EntityMob || entity instanceof EntityBat || entity instanceof EntityGolem || entity instanceof EntityDragon && this.mob.getState()) && (double)entity.getDistanceToEntity(this.mc.thePlayer) <= this.reach.getValue() && (!entity.isInvisible() || this.invis.getState()) && (double)entity.ticksExisted > this.ticksexisted.getValue();
+      return entity != null && entity.isEntityAlive() && entity != this.mc.thePlayer && (entity instanceof EntityPlayer && this.player.getState() || entity instanceof EntityAnimal && this.animal.getState() || entity instanceof EntityMob && this.mob.getState() || entity instanceof EntityBat || entity instanceof EntityGolem || entity instanceof EntityDragon && this.mob.getState()) && (double)entity.getDistanceToEntity(this.mc.thePlayer) <= this.reach.getValue() && (!entity.isInvisible() || this.invis.getState()) && (double)entity.ticksExisted > this.ticksexisted.getValue();
    }
 
-   private void sortList(final List<EntityLivingBase> weed) {
-	   weed.sort((o1, o2) -> (int)(o1.getDistanceToEntity((Entity)mc.thePlayer) - o2.getDistanceToEntity((Entity)mc.thePlayer)));
+   private void sortList(final List<EntityLivingBase> fuckkody) {
+	   fuckkody.sort((o1, o2) -> (int)(o1.getDistanceToEntity((Entity)mc.thePlayer) - o2.getDistanceToEntity((Entity)mc.thePlayer)));
    }
    
    public void AddValidTargetsToArrayList() {
@@ -125,47 +133,30 @@ public class Killaura extends Module {
               } else {
                  this.entities.remove(entity);
               }
-             sortList(this.entities);
+             //sortList(this.entities);
          }
 
    }
 
-   public float[] getRotations(Entity entityIn) {
-		double d0 = entityIn.posX - mc.thePlayer.posX;
-       double d1 = entityIn.posZ - mc.thePlayer.posZ;
-       double d2;
+    public static float[] getRotations(EntityLivingBase ent) {
+        double x = ent.posX;
+        double z = ent.posZ;
+        double y = ent.posY + ent.getEyeHeight() / 2.0F;
+        return getRotationFromPosition(x, z, y);
+    }
 
-       if (entityIn instanceof EntityLivingBase)
-       {
-           EntityLivingBase entitylivingbase = (EntityLivingBase)entityIn;
-           d2 = entitylivingbase.posY + (double)entitylivingbase.getEyeHeight() - (mc.thePlayer.posY + (double)mc.thePlayer.getEyeHeight());
-       }
-       else
-       {
-           d2 = (entityIn.getEntityBoundingBox().minY + entityIn.getEntityBoundingBox().maxY) / 2.0D - (mc.thePlayer.posY + (double)mc.thePlayer.getEyeHeight());
-       }
+    public static float[] getRotationFromPosition(double x, double z, double y) {
+        double xDiff = x - Minecraft.getMinecraft().thePlayer.posX;
+        double zDiff = z - Minecraft.getMinecraft().thePlayer.posZ;
+        double yDiff = y - Minecraft.getMinecraft().thePlayer.posY - 1.2;
 
-       double d3 = (double)MathHelper.sqrt_double(d0 * d0 + d1 * d1);
-       float f = (float)(MathHelper.atan2(d1, d0) * (180D / Math.PI)) - 90.0F;
-       float f1 = (float)(-(MathHelper.atan2(d2, d3) * (180D / Math.PI)));
-       return new float[] {f, f1};
-	}
-   
-   private float[] getAngles(EntityLivingBase entityLiving) {
-      double difX = entityLiving.posX - Wrapper.getPlayer().posX;
-      double difY = entityLiving.posY - Wrapper.getPlayer().posY + (double)(entityLiving.getEyeHeight() / 1.4F);
-      double difZ = entityLiving.posZ - Wrapper.getPlayer().posZ;
-      double hypo = (double)Wrapper.getPlayer().getDistanceToEntity(entityLiving);
-      float yaw = (float)Math.toDegrees(Math.atan2(difZ, difX)) - 90.0F;
-      float pitch = (float)(-Math.toDegrees(Math.atan2(difY, hypo)));
-      return new float[]{yaw, pitch};
-   }
+        double dist = MathHelper.sqrt_double(xDiff * xDiff + zDiff * zDiff);
+        float yaw = (float) (Math.atan2(zDiff, xDiff) * 180.0D / 3.141592653589793D) - 90.0F;
+        float pitch = (float) -(Math.atan2(yDiff, dist) * 180.0D / 3.141592653589793D);
+        return new float[]{yaw, pitch};
+    }
 
-   public float getDistanceBetweenAngles(float angle1, float angle2) {
-      return Math.abs(angle1 % 360.0F - angle2 % 360.0F) % 360.0F;
-   }
-
-   public boolean isOnSameTeam(Entity entity) {
+   public static boolean isOnSameTeam(Entity entity) {
 		if(!teams.getState()) return false;
 		if(Minecraft.getMinecraft().thePlayer.getDisplayName().getUnformattedText().startsWith("\247")) {
            if(Minecraft.getMinecraft().thePlayer.getDisplayName().getUnformattedText().length() <= 2
@@ -178,16 +169,35 @@ public class Killaura extends Module {
        }
 		return false;
 	}
-   
+
+    @SubscribeEvent
+    public void onTest(EntityViewRenderEvent.CameraSetup event) {
+        if (this.getState()) {
+            if (event.entity == Wrapper.getPlayer() && entity != null && !Lockview.getState()) {
+                if (Wrapper.getWorld() != null) {
+                    float[] fakerot = this.getRotations((EntityLivingBase) entity);
+                    event.pitch = fakerot[1];
+                    event.yaw = fakerot[0];
+                }
+            }
+        }
+    }
+
    public void Attack(Entity entity) {
       if (this.mincps.getValue() > this.maxcps.getValue()) {
          this.mincps.setValue(this.maxcps.getValue());
       }
 
+
       if (this.entities.contains(entity)) {
-          float[] fakerot = this.getAngles((EntityLivingBase) entity);
     	 //Wrapper.getMinecraft().getNetHandler().addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(fakerot[0],fakerot[1],Wrapper.getPlayer().onGround));
-         Wrapper.getPlayer().swingItem();
+          Wrapper.getPlayer().swingItem();
+          if (Lockview.getState()) {
+              float[] fakerot = this.getRotations((EntityLivingBase) entity);
+              mc.thePlayer.rotationPitch = fakerot[1];
+              mc.thePlayer.rotationYaw = fakerot[0];
+          }
+          mc.objectMouseOver.entityHit = entity;
          Wrapper.getPlayerController().attackEntity(Wrapper.getPlayer(), entity);
          mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer,C0BPacketEntityAction.Action.START_SPRINTING));
       }

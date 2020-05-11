@@ -12,7 +12,7 @@ import xyz.gucciclient.gui.component.Frame;
 import xyz.gucciclient.modules.Module;
 import xyz.gucciclient.modules.mods.render.G0ui;
 import xyz.gucciclient.modules.mods.render.Screen;
-import xyz.gucciclient.utils.Render;
+import xyz.gucciclient.utils.RenderUtils;
 import xyz.gucciclient.utils.Wrapper;
 import xyz.gucciclient.values.BooleanValue;
 import xyz.gucciclient.values.NumberValue;
@@ -76,11 +76,11 @@ public class ModulesPart extends Component {
       Wrapper.getMinecraft().fontRendererObj.drawStringWithShadow(this.binding ? "Press a key.. " + Keyboard.getKeyName(this.mod.getKey()) : "", (float)(this.parent.getX() * 2 + 5), (float)((this.parent.getY() + this.offset) * 2 + 6), (new Color(150, 150, 150)).getRGB());
       GL11.glPopMatrix();
       if (!this.mod.getBooleans().isEmpty()) {
-         Render.drawArrow((float)(this.parent.getX() + 65), (float)(this.parent.getY() + this.offset + 2), this.open, (new Color(150, 150, 150)).getRGB());
+         RenderUtils.drawArrow((float)(this.parent.getX() + 65), (float)(this.parent.getY() + this.offset + 2), this.open, (new Color(150, 150, 150)).getRGB());
       }
 
       if (!this.mod.getValues().isEmpty()) {
-         Render.drawArrow((float)(this.parent.getX() + 65), (float)(this.parent.getY() + this.offset + 2), this.open, (new Color(150, 150, 150)).getRGB());
+         RenderUtils.drawArrow((float)(this.parent.getX() + 65), (float)(this.parent.getY() + this.offset + 2), this.open, (new Color(150, 150, 150)).getRGB());
       }
 
       if (this.open && !this.subcomponents.isEmpty()) {
